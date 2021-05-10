@@ -1,29 +1,29 @@
 package it.polito.tdp.borders;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
-
-import it.polito.tdp.borders.model.Model;
+import it.polito.tdp.borders.model.CountriesModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class EntryPoint extends Application {
-
+public class EntryPoint extends Application 
+{
     @Override
-    public void start(Stage stage) throws Exception {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
+    public void start(Stage stage) throws Exception 
+    {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene_lab09.fxml"));
     	Parent root = loader.load();
         Scene scene = new Scene(root);
          
-        Model model = new Model();
+        CountriesModel model = new CountriesModel();
         FXMLController controller = loader.getController();
         controller.setModel(model);
         
-        stage.setTitle("Lab09");
+        stage.setTitle("Lab09 - Countries");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -35,7 +35,8 @@ public class EntryPoint extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         launch(args);
     }
 

@@ -1,10 +1,11 @@
 package it.polito.tdp.borders.model;
 
-public class TestModel {
-
-	public static void main(String[] args) {
-
-		Model model = new Model();
+public class TestModel 
+{
+	public static void main(String[] args) 
+	{
+		@SuppressWarnings("unused")
+		CountriesModel model = new CountriesModel();
 
 		System.out.println("TestModel -- TODO");
 		

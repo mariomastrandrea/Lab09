@@ -4,41 +4,45 @@ package it.polito.tdp.borders;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import it.polito.tdp.borders.model.Model;
+import it.polito.tdp.borders.model.CountriesModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class FXMLController {
-
-	private Model model;
-	
-    @FXML // ResourceBundle that was given to the FXMLLoader
+public class FXMLController 
+{	
+    @FXML 
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML 
     private URL location;
 
-    @FXML // fx:id="txtAnno"
-    private TextField txtAnno; // Value injected by FXMLLoader
+    @FXML 
+    private TextField txtAnno; 
 
-    @FXML // fx:id="txtResult"
-    private TextArea txtResult; // Value injected by FXMLLoader
+    @FXML 
+    private TextArea txtResult; 
+    
+    @SuppressWarnings("unused")
+	private CountriesModel model;
+
 
     @FXML
-    void doCalcolaConfini(ActionEvent event) {
+    void doCalcolaConfini(ActionEvent event) 
+    {
 
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    @FXML 
+    void initialize() 
+    {
         assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
-
     }
     
-    public void setModel(Model model) {
+    public void setModel(CountriesModel model) 
+    {
     	this.model = model;
     }
 }

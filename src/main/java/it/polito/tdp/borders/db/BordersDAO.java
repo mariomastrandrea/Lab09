@@ -10,34 +10,40 @@ import java.util.List;
 import it.polito.tdp.borders.model.Border;
 import it.polito.tdp.borders.model.Country;
 
-public class BordersDAO {
-
-	public List<Country> loadAllCountries() {
-
-		String sql = "SELECT ccode, StateAbb, StateNme FROM country ORDER BY StateAbb";
+public class BordersDAO 
+{
+	public List<Country> loadAllCountries() 
+	{
+		String sqlQuery = "SELECT ccode, StateAbb, StateNme FROM country ORDER BY StateAbb";
 		List<Country> result = new ArrayList<Country>();
 		
-		try {
-			Connection conn = ConnectDB.getConnection();
-			PreparedStatement st = conn.prepareStatement(sql);
-			ResultSet rs = st.executeQuery();
+		try 
+		{
+			Connection connection = ConnectDB.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sqlQuery);
+			ResultSet queryResult = statement.executeQuery();
 
-			while (rs.next()) {
-				System.out.format("%d %s %s\n", rs.getInt("ccode"), rs.getString("StateAbb"), rs.getString("StateNme"));
+			while (queryResult.next()) 
+			{
+				System.out.format("%d %s %s\n", queryResult.getInt("ccode"), 
+						queryResult.getString("StateAbb"), queryResult.getString("StateNme"));
 			}
 			
-			conn.close();
+			queryResult.close();
+			statement.close();
+			connection.close();
 			return result;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} 
+		catch (SQLException sqle) 
+		{
+			sqle.printStackTrace();
 			System.out.println("Errore connessione al database");
 			throw new RuntimeException("Error Connection Database");
 		}
 	}
 
-	public List<Border> getCountryPairs(int anno) {
-
+	public List<Border> getCountryPairs(int anno) 
+	{
 		System.out.println("TODO -- BordersDAO -- getCountryPairs(int anno)");
 		return new ArrayList<Border>();
 	}

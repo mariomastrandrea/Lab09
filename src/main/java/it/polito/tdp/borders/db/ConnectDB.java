@@ -13,7 +13,6 @@ public class ConnectDB
 	private static final String username = "root";
 	private static final String password = "root";
 
-	
 	static
 	{
 		HikariConfig config = new HikariConfig();
@@ -21,7 +20,7 @@ public class ConnectDB
 		config.setUsername(username);
 		config.setPassword(password);
 		
-		// MySQL
+		// MySQL config
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -39,6 +38,21 @@ public class ConnectDB
 		{
 			System.err.println("DB Connection error at: " + jdbcURL);
 			throw new RuntimeException("DB Connection error at: " + jdbcURL, sqle);
+		}
+	}
+
+	public static void close(AutoCloseable... resources) throws SQLException
+	{
+		for(var resource : resources)
+		{
+			try
+			{
+				resource.close();
+			}
+			catch(Exception e)
+			{
+				throw new SQLException("Error closing resource " + resource.toString(), e);
+			}
 		}
 	}
 

@@ -20,7 +20,7 @@ public class ConnectDB
 		config.setUsername(username);
 		config.setPassword(password);
 		
-		// MySQL config
+		// MySQL configuration
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

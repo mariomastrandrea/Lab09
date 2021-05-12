@@ -2,6 +2,7 @@ package it.polito.tdp.borders;
 
 import javafx.application.Application;
 import it.polito.tdp.borders.model.CountriesModel;
+import it.polito.tdp.borders.model.reachablecountries.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,8 +18,11 @@ public class EntryPoint extends Application
     	Parent root = loader.load();
         Scene scene = new Scene(root);
          
-        CountriesModel model = new CountriesModel();
         FXMLController controller = loader.getController();
+        
+        //strategy pattern
+        ReachableCountriesStrategy searchStrategy = new IterativeReachableCountries(); //change here
+        CountriesModel model = new CountriesModel(searchStrategy);
         controller.setModel(model);
         
         stage.setTitle("Lab09 - Countries");

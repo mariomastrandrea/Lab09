@@ -131,7 +131,7 @@ public class FXMLController
     	}
     	    	
     	sb.append("\nNumero di componenti connesse: ").append(numConnectedComponents);
-    	//sb.append("\nNumero totale di archi: ").append(this.model.getNumEdges());
+    	sb.append("\nNumero totale di archi: ").append(this.model.getNumEdges());
     	
     	return sb.toString();
 	}

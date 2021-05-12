@@ -55,7 +55,7 @@
                   <Insets left="15.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <TextArea fx:id="resultTextArea" prefHeight="400.0" text="Inserisci un anno compreso tra il 1816 e il 2016" wrapText="true">
+            <TextArea fx:id="resultTextArea" editable="false" prefHeight="400.0" text="Inserisci un anno compreso tra il 1816 e il 2016" wrapText="true">
                <VBox.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="15.0" />
                </VBox.margin></TextArea>

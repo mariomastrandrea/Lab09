@@ -2,16 +2,23 @@ package it.polito.tdp.borders.model;
 
 public class Contiguity 
 {
+	private final String id;
 	private final Country country1;
 	private final Country country2;
 	private final int year;
 	
 	
-	public Contiguity(Country country1, Country country2, int year)
+	public Contiguity(String id, Country country1, Country country2, int year)
 	{
+		this.id = id;
 		this.country1 = country1;
 		this.country2 = country2;
 		this.year = year;
+	}
+	
+	public String getId()
+	{
+		return this.id;
 	}
 
 	public Country getCountry1()

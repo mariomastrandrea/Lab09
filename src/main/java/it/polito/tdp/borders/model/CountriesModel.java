@@ -2,7 +2,6 @@ package it.polito.tdp.borders.model;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,33 +11,38 @@ import org.jgrapht.Graphs;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
 
 import it.polito.tdp.borders.db.BordersDAO;
+import it.polito.tdp.borders.model.reachablecountries.ReachableCountriesStrategy;
 
 public class CountriesModel 
 {
 	private BordersDAO dao;
-	private Map<Integer, Country> countriesIdMap;
 	private Graph<Country, DefaultEdge> graph;
+	private Map<Integer, Country> countriesIdMap;
+	private Map<String, Contiguity> contiguitiesIdMap;
+	private ReachableCountriesStrategy searchStrategy;
 	
 	
-	public CountriesModel() 
+	public CountriesModel(ReachableCountriesStrategy searchStrategy) 
 	{
 		this.dao = new BordersDAO();
 		this.countriesIdMap = new HashMap<>();
+		this.contiguitiesIdMap = new HashMap<>();
+		this.searchStrategy = searchStrategy;
 	}
 
 	public void createCountriesGraphUntil(int year)
 	{
 		this.graph = new SimpleGraph<>(DefaultEdge.class);
+		this.searchStrategy.setGraph(this.graph);
 		
 		// add vertices
 		Collection<Country> vertices = this.dao.getCountriesConnectedUntil(year, countriesIdMap);
 		Graphs.addAllVertices(this.graph, vertices);
 		
 		// add edges
-		Collection<Contiguity> contiguities = this.dao.getContiguities(year, countriesIdMap);
+		Collection<Contiguity> contiguities = this.dao.getContiguities(year, countriesIdMap, contiguitiesIdMap);
 		
 		for(Contiguity c : contiguities)
 		{
@@ -86,24 +90,7 @@ public class CountriesModel
 
 	public Collection<Country> computeReachableCountriesFrom(Country selectedCountry)
 	{
-		if(this.graph == null)
-			throw new RuntimeException("Error: graph not created");
-		
-		//BFV method
-		
-		BreadthFirstIterator<Country, DefaultEdge> iterator =
-										new BreadthFirstIterator<>(this.graph, selectedCountry);
-		
-		Collection<Country> reachableCountries = new HashSet<>();
-		
-		while(iterator.hasNext())
-		{
-			Country nextCountry = iterator.next();
-			
-			reachableCountries.add(nextCountry);
-		}
-
-		return reachableCountries;
+		return this.searchStrategy.computeReachableCountriesFrom(selectedCountry);
 	}
 
 }

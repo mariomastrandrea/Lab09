@@ -60,7 +60,8 @@ public class BordersDAO
 		return countries;
 	}
 
-	public Collection<Contiguity> getContiguities(int year, Map<Integer, Country> countriesIdMap)
+	public Collection<Contiguity> getContiguities(int year, 
+			Map<Integer, Country> countriesIdMap, Map<String, Contiguity> contiguitiesIdMap)
 	{
 		String sqlQuery = String.format("%s %s %s %s %s %s %s",
 								"SELECT state1no AS state1, state2no AS state2, year",
@@ -86,15 +87,24 @@ public class BordersDAO
 				int code1 = queryResult.getInt("state1");
 				int code2 = queryResult.getInt("state2");
 				
-				Country c1 = countriesIdMap.get(code1);
-				Country c2 = countriesIdMap.get(code2);
+				String newId = String.format("%04d%04d", code1, code2);
+				Contiguity newContiguity;
 				
-				if(c1 == null || c2 == null)
-					throw new RuntimeException("ERROR IN DB");
-				
-				int y = queryResult.getInt("year");
-				
-				Contiguity newContiguity = new Contiguity(c1, c2, y);
+				if(contiguitiesIdMap.containsKey(newId))
+					newContiguity = contiguitiesIdMap.get(newId);
+				else
+				{
+					Country c1 = countriesIdMap.get(code1);
+					Country c2 = countriesIdMap.get(code2);
+					
+					if(c1 == null || c2 == null)
+						throw new RuntimeException("ERROR IN DB");
+					
+					int y = queryResult.getInt("year");
+					
+					newContiguity = new Contiguity(newId, c1, c2, y);
+					contiguitiesIdMap.put(newId, newContiguity);
+				}
 				
 				contiguities.add(newContiguity);
 			}
